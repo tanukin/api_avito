@@ -1,0 +1,18 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  isSuccess:
+    type: boolean
+    description: "Статус ошибки"
+  error:
+    type: object
+    properties: 
+      code:
+        type: "string"
+        description: "Код ошибки."
+      message:
+        type: "string"
+        description: "Человекопонятное объяснение ошибки."
+      details:
+        type: "array"
+        description: "Объект содержащий дополнительную информацию об ошибках."
