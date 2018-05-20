@@ -1,63 +1,25 @@
 #%RAML 1.0
-title: Avito
+title: Avito Advertisements Service
 version: v1
-protocols: [ HTTP, HTTPS ]
-baseUri: http://api.avito.ru/api/{version}
+protocols: [ HTTP ]
+baseUri: http://advertisements.service.avito.ru/api/{version}
 mediaType:  application/json
 
-types:
-  # Error responses
-  ErrorResponse: !include types/badRequestSpecification.raml
-  SuccessResponse: !include types/emptyResponse.raml
-
-  ## Admin Section
-
-  # Example
-  LoginByEmailRequest: !include types/admin/auth/request/loginByEmail.raml
-  LoginByEmailResponse: !include types/admin/auth/response/loginByEmail.raml
+securitySchemes:
+  adminPanel: !include security_schemes/admin_panel.raml
 
 traits:
   pageable: !include traits/pageable.raml
 
-/admin/auth:
-  get:
-    securedBy: custom_scheme
-    description: "Информация о текущем пользователе"
-    responses:
-      200:
-        body:
-          application/json:
-            type: LoginByEmailResponse
-      400:
-        body:
-          application/json:
-            type: ErrorResponse
-  /email:
-    post:
-      securedBy: null
-      description: "Аутентификация клиента"
-      body:
-        type: LoginByEmailRequest
-      responses:
-        200:
-          body:
-            application/json:
-              type: LoginByEmailResponse
-        400:
-          body:
-            application/json:
-              type: ErrorResponse
-/admin/logout:
-  post:
-    securedBy: custom_scheme
-    description: Логаут
-    responses:
-      200:
-        body:
-          application/json:
-            type: SuccessResponse
-      400:
-        body:
-          application/json:
-            type: ErrorResponse
+resourceTypes:
+  collection: !include types/collection.raml
 
+types:
+  #entities
+  #enumerations
+
+/categories:
+
+/cities:
+
+/advertisements:

@@ -1,0 +1,17 @@
+#%RAML 1.0 ResourceType
+get:
+  responses:
+    200:
+      body:
+        application/json:
+          type: object
+          properties:
+            total:
+              type: integer
+              required: true
+              description: "Общее количество объектов"
+            items:
+              type: array
+              required: true
+              items: <<ItemType>>
+              description: "Перечень объектов для текущей страницы"
