@@ -15,11 +15,68 @@ resourceTypes:
   collection: !include types/collection.raml
 
 types:
+    cityEntity: !include types/entities/city.raml
+    cityObject: !include types/objects/city.raml
   #entities
   #enumerations
 
 /categories:
 
 /cities:
+  type:
+    collection:
+      ItemType: cityEntity
+  get:
+    description: "Получить список городов."
+  post:
+    securedBy: [ adminPanel ]
+    description: "Добавить новый город."
+    body:
+      application/json:
+        type: cityObject
+    responses:
+      201:
+      400:
+  /{cityId}:
+    uriParameters:
+      cityId:
+        description: "Идентификатор города."
+        type: integer
+    put:
+      securedBy: [ adminPanel ]
+      description: "Обновление города."
+      body:
+        application/json:
+          type: cityObject
+      responses:
+        204:
+        400:
+        404:
+    delete:
+      securedBy: [ adminPanel ]
+      description: "Удаление города."
+      responses:
+        204:
+        404:
 
 /advertisements:
+  /{advetisementId}:
+    uriParameters:
+      advetisementId:
+        description: "Идентификатор объявления."
+        type: integer
+    /publish:
+      put:
+        securedBy: [ adminPanel ]
+        description: "Публикация объявления."
+        responses:
+          204:
+          404:
+    /cancel:
+      put:
+        securedBy: [ adminPanel ]
+        description: "Отклонение объявления."
+        responses:
+          204:
+          404:
+
