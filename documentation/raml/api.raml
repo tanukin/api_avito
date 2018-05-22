@@ -25,7 +25,7 @@ types:
     is: [ pageable ]
     description: "Список категорий"
   post:
-    securedBy: adminPanel
+    securedBy: [ adminPanel ]
     description: "Создание новой категории"
     body:
       type: categoryDataObject
@@ -41,7 +41,7 @@ types:
        description: "Идентификатор категории"
        type: integer
     put:
-      securedBy: adminPanel
+      securedBy: [ adminPanel ]
       description: "Обновление существующей категории"
       body:
         type: categoryDataObject
@@ -53,7 +53,7 @@ types:
         404:
         500:
     delete:
-      securedBy: adminPanel
+      securedBy: [ adminPanel ]
       description: "Удаление существующей категории"
       responses:
         204:
@@ -67,7 +67,7 @@ types:
         description: "Идентификатор объявления"
         type: integer
     delete:
-      securedBy: adminPanel
+      securedBy: [ adminPanel ]
       description: "Снятие объявления с публикации"
       responses:
         204:
