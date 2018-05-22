@@ -15,6 +15,7 @@ resourceTypes:
   collection: !include types/collection.raml
 
 types:
+  advertisementDataObject: !include types/data_objects/advertisement.raml
   #entities
   #enumerations
 
@@ -23,3 +24,44 @@ types:
 /cities:
 
 /advertisements:
+  type: { collection: { ItemType: advertisementEntity } }
+  get:
+    queryParameters:
+      category_id:
+        description: "ID категории для поиска"
+        type: integer
+      description:
+        description: "Название/описание объявления"
+        type: string
+      city:
+        description: "Город"
+        type: integer
+      publish_date:
+        description: "Дата публикации"
+        type: datetime
+      user_id:
+        description: "ID автора объявления"
+        type: integer
+  post:
+    description: "Создать новое объявление"
+    body:
+      type: advertisementDataObject
+    responses:
+      201:
+      400:
+      500:
+  /awaiting_moderation:
+    get:
+      securedBy: [ adminPanel ]
+      description: "Получение всех объявлений, требующих модерацию"
+  /{advertisementId}:
+    get:
+      description: "Получение объявления по его ID"
+    put:
+      description: "Редактирование объявления"
+      body:
+        type: advertisementDataObject
+      responses:
+        201:
+        400:
+        500:
