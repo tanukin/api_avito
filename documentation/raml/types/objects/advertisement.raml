@@ -1,0 +1,75 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  title:
+    type: string
+    required: true
+    description: "Заголовок объявления"
+  price:
+    type: integer
+    required: true
+    description: "Цена объявления в рублях"
+  description:
+    type: string
+    required: true
+    description: "Текстовое описание объявления"
+  category_id:
+    type: integer
+    required: true
+    description: "Идентификатор категории, в которой размещено объявление"
+  city:
+    type: integer
+    required: true
+    description: "Город, в котором размещено объявление"
+  user_id:
+    type: integer
+    required: true
+    description: "Идентификатор пользователя, добавившего объявление"
+  address:
+    type: string
+    required: true
+    description: "Адрес пользователя"
+  phone:
+    type: string
+    required: true
+    description: "Контактный номер владельца объявления"
+  views:
+    type: integer
+    required:
+    description: "Количество просмотров объявления, показывается на сайте"
+  visitors:
+    type:
+    required:
+    description: "Количество уникальных посещений объявления"
+  images:
+    type:
+    required:
+    description: "Ссылки на изображения. Количество изображений от 0 до 10 в одном объявлении"
+  archived:
+    type:
+    required:
+    description: "Флаг, указывающий на то, что объявление перенесено в архив"
+  published:
+    type:
+    required:
+    description: "Флаг, показывающий, доступно ли объявление для показа пользователям на сайте"
+  cancelled:
+    type:
+    required:
+    description: "Флаг, указывающий на то, что объявление не прошло модерацию"
+  create_date:
+    type:
+    required:
+    description: "Дата создания"
+  publish_date:
+    type:
+    required:
+    description: "Дата публикации"
+  canclel_date:
+    type:
+    required:
+    description: "Дата отклонения"
+  archive_date:
+    type: datetime
+    required:
+    description: "Дата окончания действия объявления и переноса его в архив"
