@@ -16,7 +16,7 @@ resourceTypes:
 
 types:
     cityEntity: !include types/entities/city.raml
-    cityObject: !include types/objects/city.raml
+    cityDataObject: !include types/data_objects/city.raml
   #entities
   #enumerations
 
@@ -27,56 +27,66 @@ types:
     collection:
       ItemType: cityEntity
   get:
-    description: "Получить список городов."
+    description: "Получить список городов"
+    is: [ pageable ]
   post:
     securedBy: [ adminPanel ]
-    description: "Добавить новый город."
+    description: "Добавить новый город"
     body:
       application/json:
-        type: cityObject
+        type: cityDataObject
     responses:
       201:
       400:
+        body:
+          type: badRequestResponse
+      500:
   /{cityId}:
     uriParameters:
       cityId:
-        description: "Идентификатор города."
+        description: "Идентификатор города"
         type: integer
     put:
       securedBy: [ adminPanel ]
-      description: "Обновление города."
+      description: "Обновление города"
       body:
         application/json:
-          type: cityObject
+          type: cityDataObject
       responses:
         204:
         400:
+          body:
+            type: badRequestResponse
         404:
+        500:
     delete:
       securedBy: [ adminPanel ]
-      description: "Удаление города."
+      description: "Удаление города"
       responses:
         204:
         404:
+        500:
 
 /advertisements:
   /{advetisementId}:
     uriParameters:
       advetisementId:
-        description: "Идентификатор объявления."
+        description: "Идентификатор объявления"
         type: integer
     /publish:
       put:
         securedBy: [ adminPanel ]
-        description: "Публикация объявления."
+        description: "Публикация объявления"
         responses:
           204:
           404:
+          500:
     /cancel:
       put:
         securedBy: [ adminPanel ]
-        description: "Отклонение объявления."
+        description: "Отклонение объявления"
         responses:
           204:
           404:
+          500:
 
