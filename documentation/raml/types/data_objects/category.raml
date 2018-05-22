@@ -1,0 +1,15 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  title:
+    type: string
+    required: true
+    description: "Заголовок категории"
+  parent_id:
+    type: nil | integer
+    required: true
+    description: "Идентификатор родительской категории"
+  lifetime:
+    type: integer
+    required: true
+    description: "Срок жизни объявления в днях"

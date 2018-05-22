@@ -15,11 +15,61 @@ resourceTypes:
   collection: !include types/collection.raml
 
 types:
-  #entities
-  #enumerations
+  badRequestResponse: !include types/responses/badRequest.raml
+  categoryEntity: !include types/entities/category.raml
+  categoryDataObject: !include types/data_objects/category.raml
 
 /categories:
-
-/cities:
+  type: { collection: { ItemType: categoryEntity } }
+  get:
+    is: [ pageable ]
+    description: "Список категорий"
+  post:
+    securedBy: adminPanel
+    description: "Создание новой категории"
+    body:
+      type: categoryDataObject
+    responses:
+      201:
+      400:
+        body:
+          type: badRequestResponse
+      500:
+  /{categoryId}:
+    uriParameters:
+     categoryId:
+       description: "Идентификатор категории"
+       type: integer
+    put:
+      securedBy: adminPanel
+      description: "Обновление существующей категории"
+      body:
+        type: categoryDataObject
+      responses:
+        204:
+        400:
+          body:
+            type: badRequestResponse
+        404:
+        500:
+    delete:
+      securedBy: adminPanel
+      description: "Удаление существующей категории"
+      responses:
+        204:
+        404:
+        500:
 
 /advertisements:
+  /{advertisementId}:
+    uriParameters:
+      advertisementId:
+        description: "Идентификатор объявления"
+        type: integer
+    delete:
+      securedBy: adminPanel
+      description: "Снятие объявления с публикации"
+      responses:
+        204:
+        404:
+        500:
