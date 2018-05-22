@@ -23,9 +23,7 @@ types:
 /categories:
 
 /cities:
-  type:
-    collection:
-      ItemType: cityEntity
+  type: { collection: { ItemType: cityEntity } }
   get:
     description: "Получить список городов"
     is: [ pageable ]
