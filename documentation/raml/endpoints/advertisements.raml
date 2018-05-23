@@ -32,15 +32,15 @@ post:
       body:
         type: badRequestResponse
     500:
-/awaiting_moderation:
+/awaiting-moderation:
   type: { collection: { ItemType: advertisementEntity } }
   get:
     securedBy: [ adminPanel ]
     is: [ pageable ]
     description: "Список объявлений, ожидающих модерации"
-/{advertisementId}:
+/{id}:
   uriParameters:
-    advertisementId:
+    id:
       description: "Идентификатор объявления"
       type: integer
   get:
