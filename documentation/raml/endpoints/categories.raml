@@ -1,0 +1,39 @@
+type: { collection: { ItemType: categoryEntity } }
+get:
+  is: [ pageable ]
+  description: "Список категорий"
+post:
+  securedBy: [ adminPanel ]
+  description: "Создание новой категории"
+  body:
+    type: categoryDataObject
+  responses:
+    201:
+    400:
+      body:
+        type: badRequestResponse
+    500:
+/{categoryId}:
+  uriParameters:
+   categoryId:
+     description: "Идентификатор категории"
+     type: integer
+  put:
+    securedBy: [ adminPanel ]
+    description: "Обновление существующей категории"
+    body:
+      type: categoryDataObject
+    responses:
+      204:
+      400:
+        body:
+          type: badRequestResponse
+      404:
+      500:
+  delete:
+    securedBy: [ adminPanel ]
+    description: "Удаление существующей категории"
+    responses:
+      204:
+      404:
+      500:
