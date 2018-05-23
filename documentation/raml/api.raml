@@ -15,9 +15,9 @@ resourceTypes:
   collection: !include types/collection.raml
 
 types:
-  advertisementDataObject: !include types/data_objects/advertisement.raml
-  #entities
-  #enumerations
+  advertisementCreateDataObject: !include types/data_objects/advertisement.post.raml
+  advertisementFullDataObject: !include types/data_objects/advertisement.full.raml
+  advertisementEntity: !include types/entities/advertisement.raml
 
 /categories:
 
@@ -33,24 +33,27 @@ types:
       description:
         description: "Название/описание объявления"
         type: string
-      city:
-        description: "Город"
+      city_id:
+        description: "Идентификатор города"
         type: integer
-      publish_date:
+      published_at:
         description: "Дата публикации"
-        type: datetime
+        type: date-only
       user_id:
         description: "ID автора объявления"
         type: integer
   post:
     description: "Создать новое объявление"
     body:
-      type: advertisementDataObject
+      type: advertisementCreateDataObject
     responses:
       201:
       400:
+        body:
+          type: badRequestResponse
       500:
   /awaiting_moderation:
+    type: { collection: { ItemType: advertisementEntity } }
     get:
       securedBy: [ adminPanel ]
       description: "Получение всех объявлений, требующих модерацию"
@@ -60,8 +63,10 @@ types:
     put:
       description: "Редактирование объявления"
       body:
-        type: advertisementDataObject
+        type: advertisementCreateDataObject
       responses:
         201:
         400:
+          body:
+            type: badRequestResponse
         500:
