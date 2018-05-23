@@ -15,13 +15,99 @@ resourceTypes:
   collection: !include types/collection.raml
 
 types:
+  badRequestResponse: !include types/responses/badRequest.raml
+  categoryEntity: !include types/entities/category.raml
+  categoryDataObject: !include types/data_objects/category.raml
+  cityEntity: !include types/entities/city.raml
+  cityDataObject: !include types/data_objects/city.raml
   advertisementCreateDataObject: !include types/data_objects/advertisement.post.raml
   advertisementFullDataObject: !include types/data_objects/advertisement.full.raml
   advertisementEntity: !include types/entities/advertisement.raml
 
+
 /categories:
+  type: { collection: { ItemType: categoryEntity } }
+  get:
+    is: [ pageable ]
+    description: "Список категорий"
+  post:
+    securedBy: [ adminPanel ]
+    description: "Создание новой категории"
+    body:
+      type: categoryDataObject
+    responses:
+      201:
+      400:
+        body:
+          type: badRequestResponse
+      500:
+  /{categoryId}:
+    uriParameters:
+     categoryId:
+       description: "Идентификатор категории"
+       type: integer
+    put:
+      securedBy: [ adminPanel ]
+      description: "Обновление существующей категории"
+      body:
+        type: categoryDataObject
+      responses:
+        204:
+        400:
+          body:
+            type: badRequestResponse
+        404:
+        500:
+    delete:
+      securedBy: [ adminPanel ]
+      description: "Удаление существующей категории"
+      responses:
+        204:
+        404:
+        500:
 
 /cities:
+  type: { collection: { ItemType: cityEntity } }
+  get:
+    description: "Получить список городов"
+    is: [ pageable ]
+  post:
+    securedBy: [ adminPanel ]
+    description: "Добавить новый город"
+    body:
+      application/json:
+        type: cityDataObject
+    responses:
+      201:
+      400:
+        body:
+          type: badRequestResponse
+      500:
+  /{cityId}:
+    uriParameters:
+      cityId:
+        description: "Идентификатор города"
+        type: integer
+    put:
+      securedBy: [ adminPanel ]
+      description: "Обновление города"
+      body:
+        application/json:
+          type: cityDataObject
+      responses:
+        204:
+        400:
+          body:
+            type: badRequestResponse
+        404:
+        500:
+    delete:
+      securedBy: [ adminPanel ]
+      description: "Удаление города"
+      responses:
+        204:
+        404:
+        500:
 
 /advertisements:
   type: { collection: { ItemType: advertisementEntity } }
@@ -58,6 +144,10 @@ types:
       securedBy: [ adminPanel ]
       description: "Получение всех объявлений, требующих модерацию"
   /{advertisementId}:
+    uriParameters:
+      advertisementId:
+        description: "Идентификатор объявления"
+        type: integer
     get:
       description: "Получение объявления по его ID"
     put:
@@ -70,3 +160,26 @@ types:
           body:
             type: badRequestResponse
         500:
+    delete:
+      description: "Снятие объявления с публикации"
+      responses:
+        204:
+        404:
+        500:
+    /publish:
+      put:
+        securedBy: [ adminPanel ]
+        description: "Публикация объявления"
+        responses:
+          204:
+          404:
+          500:
+    /cancel:
+      put:
+        securedBy: [ adminPanel ]
+        description: "Отклонение объявления"
+        responses:
+          204:
+          404:
+          500:
+
