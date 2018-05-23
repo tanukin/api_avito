@@ -20,6 +20,10 @@ types:
   categoryDataObject: !include types/data_objects/category.raml
   cityEntity: !include types/entities/city.raml
   cityDataObject: !include types/data_objects/city.raml
+  advertisementCreateDataObject: !include types/data_objects/advertisement.post.raml
+  advertisementFullDataObject: !include types/data_objects/advertisement.full.raml
+  advertisementEntity: !include types/entities/advertisement.raml
+
 
 /categories:
   type: { collection: { ItemType: categoryEntity } }
@@ -106,11 +110,56 @@ types:
         500:
 
 /advertisements:
+  type: { collection: { ItemType: advertisementEntity } }
+  get:
+    queryParameters:
+      category_id:
+        description: "ID категории для поиска"
+        type: integer
+      description:
+        description: "Название/описание объявления"
+        type: string
+      city_id:
+        description: "Идентификатор города"
+        type: integer
+      published_at:
+        description: "Дата публикации"
+        type: date-only
+      user_id:
+        description: "ID автора объявления"
+        type: integer
+  post:
+    description: "Создать новое объявление"
+    body:
+      type: advertisementCreateDataObject
+    responses:
+      201:
+      400:
+        body:
+          type: badRequestResponse
+      500:
+  /awaiting_moderation:
+    type: { collection: { ItemType: advertisementEntity } }
+    get:
+      securedBy: [ adminPanel ]
+      description: "Получение всех объявлений, требующих модерацию"
   /{advertisementId}:
     uriParameters:
       advertisementId:
         description: "Идентификатор объявления"
         type: integer
+    get:
+      description: "Получение объявления по его ID"
+    put:
+      description: "Редактирование объявления"
+      body:
+        type: advertisementCreateDataObject
+      responses:
+        201:
+        400:
+          body:
+            type: badRequestResponse
+        500:
     delete:
       description: "Снятие объявления с публикации"
       responses:
