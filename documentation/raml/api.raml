@@ -15,12 +15,52 @@ resourceTypes:
   collection: !include types/collection.raml
 
 types:
-    cityEntity: !include types/entities/city.raml
-    cityDataObject: !include types/data_objects/city.raml
-  #entities
-  #enumerations
+  badRequestResponse: !include types/responses/badRequest.raml
+  categoryEntity: !include types/entities/category.raml
+  categoryDataObject: !include types/data_objects/category.raml
+  cityEntity: !include types/entities/city.raml
+  cityDataObject: !include types/data_objects/city.raml
 
 /categories:
+  type: { collection: { ItemType: categoryEntity } }
+  get:
+    is: [ pageable ]
+    description: "Список категорий"
+  post:
+    securedBy: [ adminPanel ]
+    description: "Создание новой категории"
+    body:
+      type: categoryDataObject
+    responses:
+      201:
+      400:
+        body:
+          type: badRequestResponse
+      500:
+  /{categoryId}:
+    uriParameters:
+     categoryId:
+       description: "Идентификатор категории"
+       type: integer
+    put:
+      securedBy: [ adminPanel ]
+      description: "Обновление существующей категории"
+      body:
+        type: categoryDataObject
+      responses:
+        204:
+        400:
+          body:
+            type: badRequestResponse
+        404:
+        500:
+    delete:
+      securedBy: [ adminPanel ]
+      description: "Удаление существующей категории"
+      responses:
+        204:
+        404:
+        500:
 
 /cities:
   type: { collection: { ItemType: cityEntity } }
@@ -66,11 +106,17 @@ types:
         500:
 
 /advertisements:
-  /{advetisementId}:
+  /{advertisementId}:
     uriParameters:
-      advetisementId:
+      advertisementId:
         description: "Идентификатор объявления"
         type: integer
+    delete:
+      description: "Снятие объявления с публикации"
+      responses:
+        204:
+        404:
+        500:
     /publish:
       put:
         securedBy: [ adminPanel ]
