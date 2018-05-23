@@ -3,7 +3,6 @@ get:
   description: "Список городов"
   is: [ pageable ]
 post:
-  securedBy: [ adminPanel ]
   description: "Добавление нового города"
   body:
     application/json:
@@ -20,7 +19,6 @@ post:
       description: "Идентификатор города"
       type: integer
   put:
-    securedBy: [ adminPanel ]
     description: "Обновление города"
     body:
       application/json:
@@ -33,7 +31,6 @@ post:
       404:
       500:
   delete:
-    securedBy: [ adminPanel ]
     description: "Удаление города"
     responses:
       204:

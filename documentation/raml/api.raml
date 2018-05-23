@@ -5,9 +5,6 @@ protocols: [ HTTP ]
 baseUri: http://advertisements.service.avito.ru/api/{version}
 mediaType:  application/json
 
-securitySchemes:
-  adminPanel: !include security_schemes/admin_panel.raml
-
 traits:
   pageable: !include traits/pageable.raml
 

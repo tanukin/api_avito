@@ -3,7 +3,6 @@ get:
   is: [ pageable ]
   description: "Список категорий"
 post:
-  securedBy: [ adminPanel ]
   description: "Создание новой категории"
   body:
     type: categoryDataObject
@@ -19,7 +18,6 @@ post:
      description: "Идентификатор категории"
      type: integer
   put:
-    securedBy: [ adminPanel ]
     description: "Обновление существующей категории"
     body:
       type: categoryDataObject
@@ -31,7 +29,6 @@ post:
       404:
       500:
   delete:
-    securedBy: [ adminPanel ]
     description: "Удаление существующей категории"
     responses:
       204:

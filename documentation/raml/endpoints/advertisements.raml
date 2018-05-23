@@ -14,8 +14,8 @@ get:
     user_id:
       description: "ID автора объявления"
       type: integer
-    description:
-      description: "Название/описание объявления"
+    search_string:
+      description: "Строка, содержащаяся в названии/описании объявления"
       type: string
       required: false
     published_at:
@@ -35,7 +35,6 @@ post:
 /awaiting-moderation:
   type: { collection: { ItemType: advertisementEntity } }
   get:
-    securedBy: [ adminPanel ]
     is: [ pageable ]
     description: "Список объявлений, ожидающих модерации"
 /{id}:
@@ -70,7 +69,6 @@ post:
       500:
   /publish:
     put:
-      securedBy: [ adminPanel ]
       description: "Публикация объявления"
       responses:
         204:
@@ -78,7 +76,6 @@ post:
         500:
   /cancel:
     put:
-      securedBy: [ adminPanel ]
       description: "Отклонение объявления"
       responses:
         204:
