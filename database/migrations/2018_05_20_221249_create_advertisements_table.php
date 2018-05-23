@@ -25,7 +25,7 @@ class CreateAdvertisementsTable extends Migration
             $table->unsignedInteger('visitors')->default(0);
             $table->boolean('archived')->default(false);
             $table->boolean('published')->default(false);
-            $table->boolean('cancelled')->nullable();
+            $table->boolean('cancelled')->default(false);
             $table->timestamp('created_date')->useCurrent();
             $table->timestamp('publish_date');
             $table->timestamp('cancel_date');
