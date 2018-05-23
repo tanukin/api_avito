@@ -7,7 +7,7 @@ properties:
     description: "Заголовок объявления"
   price:
     type: number
-    format: int64
+    format: float
     required: true
     description: "Цена объявления в рублях"
   description:
@@ -39,6 +39,8 @@ properties:
     items:
       type: object
       properties:
-        description: string
+        path:
+          type: string
+          required: false
     required: false
     description: "Список ссылок на изображения"

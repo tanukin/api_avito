@@ -20,10 +20,8 @@ types:
   categoryDataObject: !include types/data_objects/category.raml
   cityEntity: !include types/entities/city.raml
   cityDataObject: !include types/data_objects/city.raml
-  advertisementCreateDataObject: !include types/data_objects/advertisement.post.raml
-  advertisementFullDataObject: !include types/data_objects/advertisement.full.raml
   advertisementEntity: !include types/entities/advertisement.raml
-
+  advertisementDataObject: !include types/data_objects/advertisement.raml
 
 /categories:
   type: { collection: { ItemType: categoryEntity } }
@@ -69,11 +67,11 @@ types:
 /cities:
   type: { collection: { ItemType: cityEntity } }
   get:
-    description: "Получить список городов"
+    description: "Список городов"
     is: [ pageable ]
   post:
     securedBy: [ adminPanel ]
-    description: "Добавить новый город"
+    description: "Добавление нового города"
     body:
       application/json:
         type: cityDataObject
@@ -112,26 +110,32 @@ types:
 /advertisements:
   type: { collection: { ItemType: advertisementEntity } }
   get:
+    description: "Список опубликованных объявлений"
+    is: [ pageable ]
     queryParameters:
       category_id:
         description: "ID категории для поиска"
         type: integer
-      description:
-        description: "Название/описание объявления"
-        type: string
+        required: false
       city_id:
         description: "Идентификатор города"
         type: integer
-      published_at:
-        description: "Дата публикации"
-        type: date-only
+        required: false
       user_id:
         description: "ID автора объявления"
         type: integer
+      description:
+        description: "Название/описание объявления"
+        type: string
+        required: false
+      published_at:
+        description: "Дата публикации"
+        type: date-only
+        required: false
   post:
-    description: "Создать новое объявление"
+    description: "Создание нового объявления"
     body:
-      type: advertisementCreateDataObject
+      type: advertisementDataObject
     responses:
       201:
       400:
@@ -142,18 +146,26 @@ types:
     type: { collection: { ItemType: advertisementEntity } }
     get:
       securedBy: [ adminPanel ]
-      description: "Получение всех объявлений, требующих модерацию"
+      is: [ pageable ]
+      description: "Список объявлений, ожидающих модерации"
   /{advertisementId}:
     uriParameters:
       advertisementId:
         description: "Идентификатор объявления"
         type: integer
     get:
-      description: "Получение объявления по его ID"
+      description: "Получение объявления по ID"
+      responses:
+        200:
+          body:
+            application/json:
+              type: advertisementEntity
+        404:
+        500:
     put:
       description: "Редактирование объявления"
       body:
-        type: advertisementCreateDataObject
+        type: advertisementDataObject
       responses:
         201:
         400:
