@@ -1,0 +1,36 @@
+type: { collection: { ItemType: categoryEntity } }
+get:
+  is: [ pageable ]
+  description: "Список категорий"
+post:
+  description: "Создание новой категории"
+  body:
+    type: categoryDataObject
+  responses:
+    201:
+    400:
+      body:
+        type: badRequestResponse
+    500:
+/{id}:
+  uriParameters:
+   id:
+     description: "Идентификатор категории"
+     type: integer
+  put:
+    description: "Обновление существующей категории"
+    body:
+      type: categoryDataObject
+    responses:
+      204:
+      400:
+        body:
+          type: badRequestResponse
+      404:
+      500:
+  delete:
+    description: "Удаление существующей категории"
+    responses:
+      204:
+      404:
+      500:

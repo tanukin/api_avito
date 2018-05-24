@@ -1,0 +1,45 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  title:
+    type: string
+    required: true
+    description: "Заголовок объявления"
+  price:
+    type: integer
+    required: true
+    description: "Цена объявления в рублях"
+  description:
+    type: string
+    required: true
+    description: "Текстовое описание объявления"
+  categoryId:
+    type: integer
+    required: true
+    description: "Идентификатор категории, в которой размещено объявление"
+  cityId:
+    type: integer
+    required: true
+    description: "Город, в котором размещено объявление"
+  userId:
+    type: integer
+    required: true
+    description: "Идентификатор пользователя, добавившего объявление"
+  address:
+    type: string
+    required: true
+    description: "Адрес пользователя"
+  phone:
+    type: string
+    required: true
+    description: "Контактный номер владельца объявления"
+  images:
+    type: array
+    items:
+      type: object
+      properties:
+        path:
+          type: string
+          required: false
+    required: false
+    description: "Список ссылок на изображения"

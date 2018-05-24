@@ -1,63 +1,26 @@
 #%RAML 1.0
-title: Avito
+title: Avito Advertisements Service
 version: v1
-protocols: [ HTTP, HTTPS ]
-baseUri: http://api.avito.ru/api/{version}
+protocols: [ HTTP ]
+baseUri: http://advertisements.service.avito.ru/api/{version}
 mediaType:  application/json
-
-types:
-  # Error responses
-  ErrorResponse: !include types/badRequestSpecification.raml
-  SuccessResponse: !include types/emptyResponse.raml
-
-  ## Admin Section
-
-  # Example
-  LoginByEmailRequest: !include types/admin/auth/request/loginByEmail.raml
-  LoginByEmailResponse: !include types/admin/auth/response/loginByEmail.raml
 
 traits:
   pageable: !include traits/pageable.raml
 
-/admin/auth:
-  get:
-    securedBy: custom_scheme
-    description: "Информация о текущем пользователе"
-    responses:
-      200:
-        body:
-          application/json:
-            type: LoginByEmailResponse
-      400:
-        body:
-          application/json:
-            type: ErrorResponse
-  /email:
-    post:
-      securedBy: null
-      description: "Аутентификация клиента"
-      body:
-        type: LoginByEmailRequest
-      responses:
-        200:
-          body:
-            application/json:
-              type: LoginByEmailResponse
-        400:
-          body:
-            application/json:
-              type: ErrorResponse
-/admin/logout:
-  post:
-    securedBy: custom_scheme
-    description: Логаут
-    responses:
-      200:
-        body:
-          application/json:
-            type: SuccessResponse
-      400:
-        body:
-          application/json:
-            type: ErrorResponse
+resourceTypes:
+  collection: !include types/collection.raml
 
+types:
+  badRequestResponse: !include types/responses/badRequest.raml
+  categoryEntity: !include types/entities/category.raml
+  categoryDataObject: !include types/data_objects/category.raml
+  cityEntity: !include types/entities/city.raml
+  cityDataObject: !include types/data_objects/city.raml
+  advertisementEntity: !include types/entities/advertisement.raml
+  advertisementDataObject: !include types/data_objects/advertisement.raml
+
+# Endpoints
+/categories: !include endpoints/categories.raml
+/cities: !include endpoints/cities.raml
+/advertisements: !include endpoints/advertisements.raml

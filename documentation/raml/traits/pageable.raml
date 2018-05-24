@@ -1,7 +1,7 @@
 #%RAML 1.0 Trait
 usage: "Используется для пагинации выдачи"
 queryParameters:
-  page:
+  offset:
     description: "Номер страницы начиная с нуля"
     type: integer
     required: false
@@ -11,5 +11,5 @@ queryParameters:
     description: "Число записей на странице"
     type: integer
     required: false
-    default: 15
-    example: 10
+    default: 100
+    example: 100

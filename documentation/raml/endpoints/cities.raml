@@ -1,0 +1,38 @@
+type: { collection: { ItemType: cityEntity } }
+get:
+  description: "Список городов"
+  is: [ pageable ]
+post:
+  description: "Добавление нового города"
+  body:
+    application/json:
+      type: cityDataObject
+  responses:
+    201:
+    400:
+      body:
+        type: badRequestResponse
+    500:
+/{id}:
+  uriParameters:
+    id:
+      description: "Идентификатор города"
+      type: integer
+  put:
+    description: "Обновление города"
+    body:
+      application/json:
+        type: cityDataObject
+    responses:
+      204:
+      400:
+        body:
+          type: badRequestResponse
+      404:
+      500:
+  delete:
+    description: "Удаление города"
+    responses:
+      204:
+      404:
+      500:
