@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateAdvertisementsTable extends Migration
@@ -18,7 +18,7 @@ class CreateAdvertisementsTable extends Migration
             $table->text('description');
             $table->unsignedInteger('category_id')->index();
             $table->unsignedInteger('city_id');
-            $table->unsignedInteger('user_id');
+            $table->string('user_id', 36);
             $table->string('address', 50)->nullable();
             $table->string('phone', 12);
             $table->unsignedInteger('views')->default(0);
