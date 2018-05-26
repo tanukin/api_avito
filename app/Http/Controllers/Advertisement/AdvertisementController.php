@@ -6,7 +6,6 @@ use App\Core\Advertisement\Exceptions\AdvertisementSaveException;
 use App\Core\Advertisement\Services\AdvertisementService;
 use App\Http\Requests\Advertisement\StoreRequest;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -44,14 +43,11 @@ class AdvertisementController extends BaseController
         try {
             $this->advertisementService->create($request);
 
-            response()
-                ->setStatusCode(Response::HTTP_CREATED);
+            return response('', Response::HTTP_CREATED);
         } catch (AdvertisementSaveException $e) {
-            return response(['message' => $e->getMessage()])
-                ->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         } catch (\Throwable $e) {
-            return response(['message' => 'Internal server error'])
-                ->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response(['message' => 'Internal server error'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
