@@ -2,20 +2,31 @@
 
 namespace App\Http\Controllers\Advertisement;
 
+use App\Core\Advertisement\Exceptions\AdvertisementSaveException;
 use App\Core\Advertisement\Services\AdvertisementService;
-use App\Http\Requests\Advertisement\AdvertisementStore;
+use App\Http\Requests\Advertisement\StoreRequest;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 
 class AdvertisementController extends BaseController
 {
+    use ValidatesRequests;
+
     /**
      * @var AdvertisementService
      */
     private $advertisementService;
 
-    public function __construct()
+    /**
+     * AdvertisementController constructor.
+     *
+     * @param AdvertisementService $advertisementService
+     */
+    public function __construct(AdvertisementService $advertisementService)
     {
+        $this->advertisementService = $advertisementService;
     }
 
     public function index()
@@ -23,9 +34,25 @@ class AdvertisementController extends BaseController
         // @TODO
     }
 
-    public function store(AdvertisementStore $request)
+    /**
+     * @param StoreRequest $request
+     *
+     * @return $this
+     */
+    public function store(StoreRequest $request)
     {
-        $this->advertisementService->create($request->all());
+        try {
+            $this->advertisementService->create($request);
+
+            response()
+                ->setStatusCode(Response::HTTP_CREATED);
+        } catch (AdvertisementSaveException $e) {
+            return response(['message' => $e->getMessage()])
+                ->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (\Throwable $e) {
+            return response(['message' => 'Internal server error'])
+                ->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function show($id)
