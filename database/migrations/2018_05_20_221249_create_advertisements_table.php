@@ -27,9 +27,9 @@ class CreateAdvertisementsTable extends Migration
             $table->boolean('published')->default(false);
             $table->boolean('cancelled')->default(false);
             $table->timestamp('created_date')->useCurrent();
-            $table->timestamp('publish_date');
-            $table->timestamp('cancel_date');
-            $table->timestamp('archive_date');
+            $table->timestamp('publish_date')->nullable();
+            $table->timestamp('cancel_date')->nullable();
+            $table->timestamp('archive_date')->nullable();
         });
     }
 
