@@ -25,4 +25,8 @@ class Advertisement extends Model
     public $timestamps = false;
     protected $table = 'advertisements';
 
+    public function images()
+    {
+        return $this->hasMany('App\Core\Image\Models\Image');
+    }
 }

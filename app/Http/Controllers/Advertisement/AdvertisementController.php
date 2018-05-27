@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Advertisement;
 
 use App\Core\Advertisement\Exceptions\AdvertisementSaveException;
+use App\Core\Advertisement\Resources\AdvertisementCollection;
 use App\Core\Advertisement\Services\AdvertisementService;
 use App\Core\Image\Services\ImageService;
+use App\Http\Requests\Advertisement\ListRequest;
 use App\Http\Requests\Advertisement\StoreRequest;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Response;
@@ -29,9 +31,11 @@ class AdvertisementController extends BaseController
         $this->advertisementService = $advertisementService;
     }
 
-    public function index()
+    public function index(ListRequest $request)
     {
-        // @TODO
+        $collection = $this->advertisementService->findByUserId($request);
+
+        return new AdvertisementCollection($collection);
     }
 
     /**

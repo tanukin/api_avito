@@ -2,9 +2,11 @@
 
 namespace App\Core\Advertisement\Services;
 
+use App\Core\Advertisement\Dto\AdvertisementsListParamsDto;
 use App\Core\Advertisement\Models\Advertisement;
 use App\Core\Advertisement\Repositories\AdvertisementRepository;
 use App\Core\Image\Services\ImageService;
+use App\Http\Requests\Advertisement\ListRequest;
 use App\Http\Requests\Advertisement\StoreRequest;
 
 class AdvertisementService
@@ -54,5 +56,18 @@ class AdvertisementService
         }
 
         return $advertisement;
+    }
+
+    public function findByUserId(ListRequest $request)
+    {
+        $listParamsDto = new AdvertisementsListParamsDto(
+            $request['categoryId'],
+            $request['cityId'],
+            $request['publishedAt'],
+            $request['offset'],
+            $request['limit']
+        );
+
+        return $this->advertisementRepository->findByUserId($request['userId'], $listParamsDto);
     }
 }
