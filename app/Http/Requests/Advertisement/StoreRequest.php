@@ -22,6 +22,7 @@ class StoreRequest extends CommonCoreRequest
             'userId' => 'required|string|max:36',
             'address' => 'required|string|max:50',
             'phone' => 'required|string|max:12',
+            'images' => 'array',
         ];
     }
 }

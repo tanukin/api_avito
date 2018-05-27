@@ -4,6 +4,7 @@ namespace App\Core\Advertisement\Services;
 
 use App\Core\Advertisement\Models\Advertisement;
 use App\Core\Advertisement\Repositories\AdvertisementRepository;
+use App\Core\Image\Services\ImageService;
 use App\Http\Requests\Advertisement\StoreRequest;
 
 class AdvertisementService
@@ -25,10 +26,14 @@ class AdvertisementService
 
     /**
      * @param StoreRequest $request
+     * @param ImageService $imageService
+     *
+     * @return Advertisement
      *
      * @throws \App\Core\Advertisement\Exceptions\AdvertisementSaveException
+     * @throws \App\Core\Image\Exceptions\ImageSaveException
      */
-    public function create(StoreRequest $request)
+    public function create(StoreRequest $request, ImageService $imageService): Advertisement
     {
         $advertisement = new Advertisement();
         $advertisement->title = $request['title'];
@@ -41,5 +46,13 @@ class AdvertisementService
         $advertisement->phone = $request['phone'];
 
         $this->advertisementRepository->save($advertisement);
+
+        if (!empty($request['images']) && is_array($request['images'])) {
+            foreach ($request['images'] as $url) {
+                $imageService->create($advertisement->id, $url);
+            }
+        }
+
+        return $advertisement;
     }
 }

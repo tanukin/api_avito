@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Advertisement;
 
 use App\Core\Advertisement\Exceptions\AdvertisementSaveException;
 use App\Core\Advertisement\Services\AdvertisementService;
+use App\Core\Image\Services\ImageService;
 use App\Http\Requests\Advertisement\StoreRequest;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Response;
@@ -35,13 +36,14 @@ class AdvertisementController extends BaseController
 
     /**
      * @param StoreRequest $request
+     * @param ImageService $imageService
      *
-     * @return $this
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request, ImageService $imageService)
     {
         try {
-            $this->advertisementService->create($request);
+            $this->advertisementService->create($request, $imageService);
 
             return response('', Response::HTTP_CREATED);
         } catch (AdvertisementSaveException $e) {

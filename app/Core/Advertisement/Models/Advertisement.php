@@ -9,15 +9,16 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Core\Advertisement\Models
  *
- * @property $title
- * @property $price
- * @property $description
- * @property $category_id
- * @property $city_id
- * @property $user_id
- * @property $address
- * @property $phone
- * @property $publish_date
+ * @property int $id
+ * @property string $title
+ * @property int $price
+ * @property string $description
+ * @property int $category_id
+ * @property int $city_id
+ * @property string $user_id
+ * @property string $address
+ * @property string $phone
+ * @property string $publish_date
  */
 class Advertisement extends Model
 {
