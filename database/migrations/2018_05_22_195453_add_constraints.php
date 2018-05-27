@@ -23,7 +23,7 @@ class AddConstraints extends Migration
         });
 
         Schema::table('images', function (Blueprint $table) {
-            $table->foreign('advertisement_id')->references('id')->on('advertisements');
+            $table->foreign('advertisement_id')->references('id')->on('advertisements')->onDelete('cascade');
         });
     }
 
