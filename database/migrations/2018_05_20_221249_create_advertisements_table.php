@@ -17,8 +17,8 @@ class CreateAdvertisementsTable extends Migration
             $table->unsignedInteger('price');
             $table->text('description');
             $table->unsignedInteger('category_id')->index();
-            $table->unsignedInteger('city_id');
-            $table->string('user_id', 36);
+            $table->unsignedInteger('city_id')->index();
+            $table->string('user_id', 36)->index();
             $table->string('address', 50)->nullable();
             $table->string('phone', 12);
             $table->unsignedInteger('views')->default(0);
