@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Advertisement;
 use App\Core\Advertisement\Exceptions\AdvertisementSaveException;
 use App\Core\Advertisement\Resources\AdvertisementCollection;
 use App\Core\Advertisement\Services\AdvertisementService;
+use App\Core\Image\Exceptions\ImageSaveException;
 use App\Core\Image\Services\ImageService;
 use App\Http\Requests\Advertisement\ListRequest;
 use App\Http\Requests\Advertisement\StoreRequest;
@@ -42,19 +43,16 @@ class AdvertisementController extends BaseController
      * @param StoreRequest $request
      * @param ImageService $imageService
      *
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @return Response
+     *
+     * @throws AdvertisementSaveException
+     * @throws ImageSaveException
      */
     public function store(StoreRequest $request, ImageService $imageService)
     {
-        try {
-            $this->advertisementService->create($request, $imageService);
+        $this->advertisementService->create($request, $imageService);
 
-            return response('', Response::HTTP_CREATED);
-        } catch (AdvertisementSaveException $e) {
-            return response(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
-        } catch (\Throwable $e) {
-            return response(['message' => 'Internal server error'], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        return response('', Response::HTTP_CREATED);
     }
 
     public function show($id)

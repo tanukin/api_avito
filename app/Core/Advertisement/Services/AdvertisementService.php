@@ -8,6 +8,8 @@ use App\Core\Advertisement\Repositories\AdvertisementRepository;
 use App\Core\Image\Services\ImageService;
 use App\Http\Requests\Advertisement\ListRequest;
 use App\Http\Requests\Advertisement\StoreRequest;
+use App\Core\Advertisement\Exceptions\AdvertisementSaveException;
+use App\Core\Image\Exceptions\ImageSaveException;
 
 class AdvertisementService
 {
@@ -32,8 +34,8 @@ class AdvertisementService
      *
      * @return Advertisement
      *
-     * @throws \App\Core\Advertisement\Exceptions\AdvertisementSaveException
-     * @throws \App\Core\Image\Exceptions\ImageSaveException
+     * @throws AdvertisementSaveException
+     * @throws ImageSaveException
      */
     public function create(StoreRequest $request, ImageService $imageService): Advertisement
     {
@@ -49,7 +51,7 @@ class AdvertisementService
 
         $this->advertisementRepository->save($advertisement);
 
-        if (!empty($request['images']) && is_array($request['images'])) {
+        if ($request->has('images')) {
             foreach ($request['images'] as $url) {
                 $imageService->create($advertisement->id, $url);
             }
@@ -58,6 +60,11 @@ class AdvertisementService
         return $advertisement;
     }
 
+    /**
+     * @param ListRequest $request
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function findByUserId(ListRequest $request)
     {
         $listParamsDto = new AdvertisementsListParamsDto(

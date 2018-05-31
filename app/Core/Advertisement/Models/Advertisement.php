@@ -2,6 +2,7 @@
 
 namespace App\Core\Advertisement\Models;
 
+use App\Core\Image\Models\Image;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -27,6 +28,6 @@ class Advertisement extends Model
 
     public function images()
     {
-        return $this->hasMany('App\Core\Image\Models\Image');
+        return $this->hasMany(Image::class);
     }
 }

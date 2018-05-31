@@ -15,5 +15,4 @@ class ImageRepository
 
         return $image;
     }
-
 }

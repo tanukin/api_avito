@@ -38,7 +38,7 @@ class AdvertisementsListParamsDto
      * @param int $offset
      * @param int $limit
      */
-    public function __construct(?int $categoryId, ?int $cityId, ?string $publishedAt, ?int $offset, ?int $limit)
+    public function __construct($categoryId, $cityId, $publishedAt, $offset, $limit)
     {
         $this->categoryId = $categoryId;
         $this->cityId = $cityId;

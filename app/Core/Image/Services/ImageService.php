@@ -4,6 +4,7 @@ namespace App\Core\Image\Services;
 
 use App\Core\Image\Models\Image;
 use App\Core\Image\Repositories\ImageRepository;
+use App\Core\Image\Exceptions\ImageSaveException;
 
 class ImageService
 {
@@ -28,7 +29,7 @@ class ImageService
      *
      * @return Image
      *
-     * @throws \App\Core\Image\Exceptions\ImageSaveException
+     * @throws ImageSaveException
      */
     public function create(int $advertisementId, string $url): Image
     {

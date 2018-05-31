@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+use Symfony\Component\Debug\Exception\FlattenException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +48,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $customException = FlattenException::create($exception);
+        $statusCode = $customException->getStatusCode($customException);
+
+        if ($statusCode === Response::HTTP_INTERNAL_SERVER_ERROR) {
+            return response(['message' => 'Internal server error'], $statusCode);
+        }
+
         return parent::render($request, $exception);
     }
 }
