@@ -160,6 +160,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * Advertisement core providers
+         */
+        App\Providers\AdvertisementCommonServiceProvider::class
+
     ],
 
     /*
