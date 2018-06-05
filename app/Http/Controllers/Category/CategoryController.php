@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Category;
 
+use App\Core\Category\Exceptions\CategoryException;
 use App\Core\Category\Interfaces\CategoryServiceInterface;
-use App\Core\Category\Resources\CategoryCollection;
+use App\Core\Category\Models\Category;
+use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\PaginationRequest;
+use App\Http\Resources\ResponseCollection;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 
 class CategoryController extends BaseController
@@ -18,54 +21,64 @@ class CategoryController extends BaseController
      */
     private $service;
 
-    /**
-     * CategoryController constructor.
-     *
-     * @param CategoryServiceInterface $service
-     */
     public function __construct(CategoryServiceInterface $service)
     {
         $this->service = $service;
     }
 
+    /**
+     * @param PaginationRequest $request
+     *
+     * @return ResponseCollection
+     */
     public function index(PaginationRequest $request)
     {
         $categories = $this->service->getCategories($request);
 
-        return new CategoryCollection($categories);
+        return new ResponseCollection($categories);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param StoreRequest $request
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
+     *
+     * @throws CategoryException
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $this->service->create($request);
+
+        return response('', Response::HTTP_CREATED);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param StoreRequest $request
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     *
+     * @return Response
+     *
+     * @throws CategoryException
      */
-    public function update(Request $request, $id)
+    public function update(StoreRequest $request, int $id)
     {
-        //
+        $this->service->update($request, $id);
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param int $id
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
+     *
+     * @throws CategoryException
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        $this->service->delete($id);
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 }

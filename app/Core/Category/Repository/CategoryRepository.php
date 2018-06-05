@@ -3,6 +3,7 @@
 namespace App\Core\Category\Repository;
 
 use App\Core\Category\Dto\CategoryDto;
+use App\Core\Category\Exceptions\CategoryException;
 use App\Core\Category\Interfaces\RepositoryInterface;
 use App\Core\Category\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
@@ -29,13 +30,28 @@ class CategoryRepository implements RepositoryInterface
         return $build->get();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function save(Category $category): bool
     {
-        // TODO: Implement save() method.
+        if (!$category->save())
+            throw new CategoryException("Error saving category");
+
+        return true;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function delete(Category $category): bool
     {
-        // TODO: Implement delete() method.
+        try {
+            $category->delete();
+
+            return true;
+        } catch (\Exception $e) {
+            throw new CategoryException("Error removing category");
+        }
     }
 }

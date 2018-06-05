@@ -18,11 +18,4 @@ class Category extends Model
 {
     public $timestamps = false;
     protected $table = "categories";
-
-    protected $fillable = ['title', 'parent_id', 'lifetime'];
-
-    public function children()
-    {
-        return $this->hasMany(self::class, 'parent_id', 'id');
-    }
 }
