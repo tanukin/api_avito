@@ -1,4 +1,5 @@
 <?php
+Route::get('/laratol', function () {return 'lalalala';});
 
 Route::group([
     'namespace' => 'Advertisement',
