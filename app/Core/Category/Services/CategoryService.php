@@ -72,7 +72,6 @@ class CategoryService implements CategoryServiceInterface
 
     /**
      * @param Category $category
-     *
      * @param Request $request
      *
      * @return Category

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Category;
 
 use App\Core\Category\Exceptions\CategoryException;
 use App\Core\Category\Interfaces\CategoryServiceInterface;
-use App\Core\Category\Models\Category;
 use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Resources\ResponseCollection;
@@ -54,7 +53,6 @@ class CategoryController extends BaseController
 
     /**
      * @param StoreRequest $request
-     *
      * @param int $id
      *
      * @return Response

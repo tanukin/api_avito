@@ -27,7 +27,6 @@ interface CategoryServiceInterface
 
     /**
      * @param Request $request
-     *
      * @param int $id
      *
      * @return bool
