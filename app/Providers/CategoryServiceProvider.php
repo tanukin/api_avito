@@ -24,12 +24,12 @@ class CategoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Core\Category\Interfaces\CategoryServiceInterface',
-            'App\Core\Category\Services\CategoryService'
+            \App\Core\Category\Interfaces\CategoryServiceInterface::class,
+            \App\Core\Category\Services\CategoryService::class
         );
         $this->app->bind(
-            'App\Core\Category\Interfaces\RepositoryInterface',
-            'App\Core\Category\Repository\CategoryRepository'
+            \App\Core\Category\Interfaces\RepositoryInterface::class,
+            \App\Core\Category\Repository\CategoryRepository::class
         );
     }
 }

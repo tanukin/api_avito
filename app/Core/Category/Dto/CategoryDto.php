@@ -4,6 +4,9 @@ namespace App\Core\Category\Dto;
 
 class CategoryDto
 {
+    const OFFSET_DEFAULT = 0;
+    const LIMIT_DEFAULT = 100;
+
     /**
      * @var int
      */
@@ -13,9 +16,6 @@ class CategoryDto
      * @var int
      */
     private $limit;
-
-    const OFFSET_DEFAULT = 0;
-    const LIMIT_DEFAULT = 100;
 
     /**
      * @return int
