@@ -65,9 +65,7 @@ class CategoryService implements CategoryServiceInterface
      */
     public function delete(int $id): bool
     {
-        $category = $this->repository->getCategory($id);
-
-        return $this->repository->delete($category);
+        return $this->repository->delete($id);
     }
 
     /**

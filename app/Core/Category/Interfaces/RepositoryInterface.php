@@ -33,11 +33,11 @@ interface RepositoryInterface
     public function save(Category $category): bool;
 
     /**
-     * @param Category $category
+     * @param int $id
      *
      * @return bool
      *
      * @throws CategoryException
      */
-    public function delete(Category $category): bool;
+    public function delete(int $id): bool;
 }

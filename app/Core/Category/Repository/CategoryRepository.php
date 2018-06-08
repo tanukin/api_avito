@@ -35,8 +35,9 @@ class CategoryRepository implements RepositoryInterface
      */
     public function save(Category $category): bool
     {
-        if (!$category->save())
+        if (!$category->save()) {
             throw new CategoryException("Error saving category");
+        }
 
         return true;
     }
@@ -44,14 +45,12 @@ class CategoryRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(Category $category): bool
+    public function delete(int $id): bool
     {
-        try {
-            $category->delete();
-
-            return true;
-        } catch (\Exception $e) {
+        if (Category::destroy($id) == 0) {
             throw new CategoryException("Error removing category");
         }
+
+        return true;
     }
 }
