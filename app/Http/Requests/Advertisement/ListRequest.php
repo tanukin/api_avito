@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Advertisement;
 
-class PaginationRequest extends CommonCoreRequest
+use App\Http\Requests\CommonCoreRequest;
+
+class ListRequest extends CommonCoreRequest
 {
     public function authorize()
     {
@@ -12,6 +14,10 @@ class PaginationRequest extends CommonCoreRequest
     public function rules()
     {
         return [
+            'categoryId' => 'integer',
+            'cityId' => 'integer',
+            'userId' => 'required|string',
+            'publishedAt' => 'date',
             'offset' => 'integer',
             'limit' => 'integer',
         ];
