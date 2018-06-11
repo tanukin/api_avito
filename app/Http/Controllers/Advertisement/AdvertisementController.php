@@ -51,7 +51,7 @@ class AdvertisementController extends BaseController
      */
     public function store(StoreRequest $request, ImageService $imageService)
     {
-        $advertisement =$this->advertisementService->create($request, $imageService);
+        $advertisement = $this->advertisementService->create($request, $imageService);
 
         return response($advertisement, Response::HTTP_CREATED);
     }
