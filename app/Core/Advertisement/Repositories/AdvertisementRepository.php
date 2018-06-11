@@ -66,4 +66,17 @@ class AdvertisementRepository
 
         return $builder;
     }
+
+    /**
+     * @param AdvertisementsListParamsDto $dto
+     *
+     * @return Collection
+     */
+    public function getAwatingModeration(AdvertisementsListParamsDto $dto): Collection
+    {
+        $builder = Advertisement::where(['published' => false])->where(['cancelled' => false]);
+        $builder = $this->addListAdditionalParams($dto, $builder);
+
+        return $builder->get();
+    }
 }

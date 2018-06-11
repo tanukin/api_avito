@@ -3,13 +3,14 @@
 namespace App\Core\Advertisement\Services;
 
 use App\Core\Advertisement\Dto\AdvertisementsListParamsDto;
+use App\Core\Advertisement\Exceptions\AdvertisementSaveException;
 use App\Core\Advertisement\Models\Advertisement;
 use App\Core\Advertisement\Repositories\AdvertisementRepository;
+use App\Core\Image\Exceptions\ImageSaveException;
 use App\Core\Image\Services\ImageService;
 use App\Http\Requests\Advertisement\ListRequest;
 use App\Http\Requests\Advertisement\StoreRequest;
-use App\Core\Advertisement\Exceptions\AdvertisementSaveException;
-use App\Core\Image\Exceptions\ImageSaveException;
+use App\Http\Requests\PaginationRequest;
 
 class AdvertisementService
 {
@@ -76,5 +77,24 @@ class AdvertisementService
         );
 
         return $this->advertisementRepository->findByUserId($request['userId'], $listParamsDto);
+    }
+
+    /**
+     * @param PaginationRequest $request
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAwatingModeration(PaginationRequest $request)
+    {
+        $dto = new AdvertisementsListParamsDto(
+            null,
+            null,
+            null,
+            $request->get('offset'),
+            $request->get('limit')
+        );
+
+
+        return $this->advertisementRepository->getAwatingModeration($dto);
     }
 }

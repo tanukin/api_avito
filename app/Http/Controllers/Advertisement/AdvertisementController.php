@@ -9,6 +9,7 @@ use App\Core\Image\Exceptions\ImageSaveException;
 use App\Core\Image\Services\ImageService;
 use App\Http\Requests\Advertisement\ListRequest;
 use App\Http\Requests\Advertisement\StoreRequest;
+use App\Http\Requests\PaginationRequest;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
@@ -53,6 +54,19 @@ class AdvertisementController extends BaseController
         $this->advertisementService->create($request, $imageService);
 
         return response('', Response::HTTP_CREATED);
+    }
+
+    /**
+     * @param PaginationRequest $request
+     *
+     * @return AdvertisementCollection
+     */
+    public function awatingModeration(PaginationRequest $request)
+    {
+        $collection = $this->advertisementService->getAwatingModeration($request);
+
+
+        return new AdvertisementCollection($collection);
     }
 
     public function show($id)
