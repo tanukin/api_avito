@@ -1,0 +1,69 @@
+version: '2'
+
+services:
+    api:
+        build: ./docker-files/api
+        container_name: api
+        environment:
+            - XDEBUG_HOST=${XDEBUG_HOST}
+            - XDEBUG_PORT=${XDEBUG_PORT}
+            - XDEBUG_IDE_KEY=${XDEBUG_IDE_KEY}
+        depends_on:
+            - postgresql
+#            - redis
+#            - rabbitmq
+#            - mailcatcher
+        volumes:
+            - .:/var/www
+        networks:
+            - backend
+        ports:
+             - 8000:80
+
+    postgresql:
+        image: postgres:9.5.6
+        container_name: postgresql
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+            - POSTGRES_DB=${DB_DATABASE}
+        volumes:
+            - /var/lib/postgresql
+        networks:
+            - backend
+
+#    rabbitmq:
+#        container_name: rabbitmq
+#        image: richbrains/rabbitmq-delayed-management
+#        volumes:
+#            - ./docker-files/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+#        ports:
+#            - 5672:5672
+#            - 15672:15672
+#        networks:
+#            - backend
+#
+#    redis:
+#        container_name: redis
+#        image: redis:3.2
+#        ports:
+#            - 6379:6379
+#        networks:
+#            - backend
+#
+#    mailcatcher:
+#        image: yappabe/mailcatcher
+#        container_name: mailcatcher
+#        ports:
+#            - 1025:1025
+#            - 1080:1080
+#        networks:
+#            - backend
+
+networks:
+    default:
+        driver: bridge
+    backend:
+        external: true
