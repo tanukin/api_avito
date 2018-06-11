@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
         $customException = FlattenException::create($exception);
         $statusCode = $customException->getStatusCode($customException);
 
-        if ($statusCode === Response::HTTP_INTERNAL_SERVER_ERROR) {
+        if (!app()->environment('local') && $statusCode === Response::HTTP_INTERNAL_SERVER_ERROR) {
             return response(['message' => 'Internal server error'], $statusCode);
         }
 

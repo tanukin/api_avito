@@ -9,6 +9,7 @@ use App\Core\Image\Exceptions\ImageSaveException;
 use App\Core\Image\Services\ImageService;
 use App\Http\Requests\Advertisement\ListRequest;
 use App\Http\Requests\Advertisement\StoreRequest;
+use App\Http\Requests\Advertisement\UpdateRequest;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
@@ -50,23 +51,49 @@ class AdvertisementController extends BaseController
      */
     public function store(StoreRequest $request, ImageService $imageService)
     {
-        $this->advertisementService->create($request, $imageService);
+        $advertisement =$this->advertisementService->create($request, $imageService);
 
-        return response('', Response::HTTP_CREATED);
+        return response($advertisement, Response::HTTP_CREATED);
     }
 
-    public function show($id)
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function show(int $id)
     {
-        // @TODO
+        $advertisement = $this->advertisementService->getById($id);
+
+        return response($advertisement);
     }
 
-    public function update($id)
+    /**
+     * @param int           $id
+     * @param UpdateRequest $updateRequest
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws AdvertisementSaveException
+     */
+    public function update(int $id, UpdateRequest $updateRequest)
     {
-        // @TODO
+        $this->advertisementService->update($id, $updateRequest);
+
+        return response('', Response::HTTP_OK);
     }
 
-    public function destroy($id)
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \App\Core\Advertisement\Exceptions\AdvertisementDeleteException
+     */
+    public function destroy(int $id)
     {
-        // @TODO
+        $this->advertisementService->delete($id);
+
+        return response('', Response::HTTP_OK);
     }
 }
