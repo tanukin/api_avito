@@ -163,7 +163,8 @@ return [
         /**
          * Advertisement core providers
          */
-        App\Providers\AdvertisementCommonServiceProvider::class
+        App\Providers\AdvertisementCommonServiceProvider::class,
+        App\Providers\CategoryServiceProvider::class
 
     ],
 

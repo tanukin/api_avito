@@ -11,3 +11,14 @@ Route::group([
     Route::put('/{id}', 'AdvertisementController@update')->name('advertisements.update');
     Route::delete('/{id}', 'AdvertisementController@destroy')->name('advertisements.destroy');
 });
+
+Route::group([
+    'namespace' => 'Category',
+    'prefix' => 'categories',
+], function () {
+    Route::get('/', 'CategoryController@index');
+    Route::post('/', 'CategoryController@store');
+
+    Route::put('/{id}', 'CategoryController@update');
+    Route::delete('/{id}', 'CategoryController@destroy');
+});
