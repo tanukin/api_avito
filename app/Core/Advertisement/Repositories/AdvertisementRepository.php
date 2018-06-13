@@ -66,4 +66,14 @@ class AdvertisementRepository
 
         return $builder;
     }
+
+    /**
+     * @param int $id
+     *
+     * @return Advertisement
+     */
+    public function getAdvertisement(int $id): Advertisement
+    {
+        return Advertisement::findOrFail($id);
+    }
 }

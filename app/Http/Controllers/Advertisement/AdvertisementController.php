@@ -69,4 +69,32 @@ class AdvertisementController extends BaseController
     {
         // @TODO
     }
+
+    /**
+     * @param int $id
+     *
+     * @return Response
+     *
+     * @throws AdvertisementSaveException
+     */
+    public function publish(int $id)
+    {
+        $this->advertisementService->publish($id);
+
+        return response('', Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Response
+     *
+     * @throws AdvertisementSaveException
+     */
+    public function cancel(int $id)
+    {
+        $this->advertisementService->cancel($id);
+
+        return response('', Response::HTTP_NO_CONTENT);
+    }
 }
