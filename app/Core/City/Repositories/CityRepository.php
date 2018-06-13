@@ -26,7 +26,6 @@ class CityRepository
      */
     public function save(City $city): City
     {
-        
         if (!$city->save()) {
             throw new CitySaveException('City saving error');
         }
@@ -39,14 +38,13 @@ class CityRepository
      *
      * @return mixed
      */
-    public function get(CitiesListDto $cityDto) : Collection
+    public function get(CitiesListDto $cityDto): Collection
     {
         $builder = City::on()
             ->offset($cityDto->getOffset())
             ->limit($cityDto->getLimit());
 
         return $builder->get();
-
     }
 
     /**
@@ -56,7 +54,7 @@ class CityRepository
      *
      * @throws CityExistException
      */
-    public function getCity($id):City
+    public function getCity($id): City
     {
         $city = City::find($id);
         if (!$city) {
