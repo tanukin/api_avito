@@ -10,9 +10,9 @@ services:
             - XDEBUG_IDE_KEY=${XDEBUG_IDE_KEY}
         depends_on:
             - postgresql
-#            - redis
-#            - rabbitmq
-#            - mailcatcher
+            - redis
+            - rabbitmq
+            - mailcatcher
         volumes:
             - .:/var/www
         networks:
@@ -34,33 +34,33 @@ services:
         networks:
             - backend
 
-#    rabbitmq:
-#        container_name: rabbitmq
-#        image: richbrains/rabbitmq-delayed-management
-#        volumes:
-#            - ./docker-files/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
-#        ports:
-#            - 5672:5672
-#            - 15672:15672
-#        networks:
-#            - backend
-#
-#    redis:
-#        container_name: redis
-#        image: redis:3.2
-#        ports:
-#            - 6379:6379
-#        networks:
-#            - backend
-#
-#    mailcatcher:
-#        image: yappabe/mailcatcher
-#        container_name: mailcatcher
-#        ports:
-#            - 1025:1025
-#            - 1080:1080
-#        networks:
-#            - backend
+    rabbitmq:
+        container_name: rabbitmq
+        image: richbrains/rabbitmq-delayed-management
+        volumes:
+            - ./docker-files/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+        ports:
+            - 5672:5672
+            - 15672:15672
+        networks:
+            - backend
+
+    redis:
+        container_name: redis
+        image: redis:3.2
+        ports:
+            - 6379:6379
+        networks:
+            - backend
+
+    mailcatcher:
+        image: yappabe/mailcatcher
+        container_name: mailcatcher
+        ports:
+            - 1025:1025
+            - 1080:1080
+        networks:
+            - backend
 
 networks:
     default:

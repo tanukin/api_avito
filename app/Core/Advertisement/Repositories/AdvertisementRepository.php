@@ -74,7 +74,7 @@ class AdvertisementRepository
      */
     public function getAwatingModeration(AdvertisementsListParamsDto $dto): Collection
     {
-        $builder = Advertisement::where(['published' => false])->where(['cancelled' => false]);
+        $builder = Advertisement::where(['published' => false, 'cancelled' => false]);
         $builder = $this->addListAdditionalParams($dto, $builder);
 
         return $builder->get();
