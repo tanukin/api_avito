@@ -22,3 +22,13 @@ Route::group([
     Route::put('/{id}', 'CityController@update')->name('cities.update');
     Route::delete('/{id}', 'CityController@destroy')->name('cities.destroy');
 });
+Route::group([
+    'namespace' => 'Category',
+    'prefix' => 'categories',
+], function () {
+    Route::get('/', 'CategoryController@index');
+    Route::post('/', 'CategoryController@store');
+
+    Route::put('/{id}', 'CategoryController@update');
+    Route::delete('/{id}', 'CategoryController@destroy');
+});
