@@ -4,7 +4,7 @@ namespace App\Http\Requests\Advertisement;
 
 use App\Http\Requests\CommonCoreRequest;
 
-class StoreRequest extends CommonCoreRequest
+class StoreRequest extends CommonCoreRequest implements AdvertisementRequestInterface
 {
     public function authorize()
     {
@@ -23,7 +23,7 @@ class StoreRequest extends CommonCoreRequest
             'address' => 'required|string|max:50',
             'phone' => 'required|string|max:12',
             'images' => 'array',
-            'images.*' => 'string|max:255'
+            'images.*' => 'string|max:255',
         ];
     }
 }

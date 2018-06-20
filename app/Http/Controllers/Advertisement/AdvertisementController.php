@@ -9,7 +9,7 @@ use App\Core\Image\Exceptions\ImageSaveException;
 use App\Core\Image\Services\ImageService;
 use App\Http\Requests\Advertisement\ListRequest;
 use App\Http\Requests\Advertisement\StoreRequest;
-use App\Http\Requests\PaginationRequest;
+use App\Http\Requests\Advertisement\UpdateRequest;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
@@ -51,9 +51,50 @@ class AdvertisementController extends BaseController
      */
     public function store(StoreRequest $request, ImageService $imageService)
     {
-        $this->advertisementService->create($request, $imageService);
+        $advertisement = $this->advertisementService->create($request, $imageService);
 
-        return response('', Response::HTTP_CREATED);
+        return response($advertisement, Response::HTTP_CREATED);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function show($id)
+    {
+        $advertisement = $this->advertisementService->getById($id);
+
+        return response($advertisement);
+    }
+
+    /**
+     * @param int $id
+     * @param UpdateRequest $updateRequest
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws AdvertisementSaveException
+     */
+    public function update(int $id, UpdateRequest $updateRequest)
+    {
+        $this->advertisementService->update($id, $updateRequest);
+
+        return response('', Response::HTTP_OK);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \App\Core\Advertisement\Exceptions\AdvertisementDeleteException
+     */
+    public function destroy(int $id)
+    {
+        $this->advertisementService->delete($id);
+
+        return response('', Response::HTTP_OK);
     }
 
     /**
@@ -67,20 +108,5 @@ class AdvertisementController extends BaseController
 
 
         return new AdvertisementCollection($collection);
-    }
-
-    public function show($id)
-    {
-        // @TODO
-    }
-
-    public function update($id)
-    {
-        // @TODO
-    }
-
-    public function destroy($id)
-    {
-        // @TODO
     }
 }
