@@ -16,6 +16,16 @@ Route::group([
 });
 
 Route::group([
+    'namespace' => 'City',
+    'prefix' => 'cities',
+], function () {
+    Route::get('/', 'CityController@index')->name('cities.index');
+    Route::post('/', 'CityController@store')->name('cities.store');
+
+    Route::put('/{id}', 'CityController@update')->name('cities.update');
+    Route::delete('/{id}', 'CityController@destroy')->name('cities.destroy');
+});
+Route::group([
     'namespace' => 'Category',
     'prefix' => 'categories',
 ], function () {

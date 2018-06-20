@@ -3,6 +3,7 @@
 namespace App\Core\Advertisement\Repositories;
 
 use App\Core\Advertisement\Dto\AdvertisementsListParamsDto;
+use App\Core\Advertisement\Exceptions\AdvertisementDeleteException;
 use App\Core\Advertisement\Exceptions\AdvertisementSaveException;
 use App\Core\Advertisement\Models\Advertisement;
 use Illuminate\Database\Eloquent\Builder;
@@ -72,8 +73,30 @@ class AdvertisementRepository
      *
      * @return Advertisement
      */
-    public function getAdvertisement(int $id): Advertisement
+    public function getWithImages(int $id): Advertisement
+    {
+        return Advertisement::whereId($id)->with('images')->first();
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Advertisement|null
+     */
+    public function getAdvertisement(int $id): ?Advertisement
     {
         return Advertisement::findOrFail($id);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @throws AdvertisementDeleteException
+     */
+    public function delete(int $id)
+    {
+        if (!Advertisement::destroy($id)) {
+            throw new AdvertisementDeleteException('Error. Advertisement was not deleted.');
+        }
     }
 }
