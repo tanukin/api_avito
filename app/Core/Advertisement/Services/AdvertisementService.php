@@ -12,6 +12,7 @@ use App\Http\Requests\Advertisement\StoreRequest;
 use App\Core\Advertisement\Exceptions\AdvertisementSaveException;
 use App\Core\Image\Exceptions\ImageSaveException;
 use App\Http\Requests\Advertisement\UpdateRequest;
+use Illuminate\Support\Carbon;
 
 class AdvertisementService
 {
@@ -127,5 +128,33 @@ class AdvertisementService
     public function delete(int $id)
     {
         $this->advertisementRepository->delete($id);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @throws AdvertisementSaveException
+     */
+    public function publish(int $id): void
+    {
+        $advertisement = $this->advertisementRepository->getAdvertisement($id);
+        $advertisement->published = true;
+        $advertisement->publish_date = Carbon::now()->toDateTimeString();
+
+        $this->advertisementRepository->save($advertisement);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @throws AdvertisementSaveException
+     */
+    public function cancel(int $id): void
+    {
+        $advertisement = $this->advertisementRepository->getAdvertisement($id);
+        $advertisement->cancelled = true;
+        $advertisement->cancel_date = Carbon::now()->toDateTimeString();
+
+        $this->advertisementRepository->save($advertisement);
     }
 }
