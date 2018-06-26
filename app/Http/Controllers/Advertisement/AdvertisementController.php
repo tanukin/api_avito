@@ -61,7 +61,7 @@ class AdvertisementController extends BaseController
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $advertisement = $this->advertisementService->getById($id);
 
@@ -69,7 +69,7 @@ class AdvertisementController extends BaseController
     }
 
     /**
-     * @param int $id
+     * @param int           $id
      * @param UpdateRequest $updateRequest
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
@@ -95,6 +95,34 @@ class AdvertisementController extends BaseController
         $this->advertisementService->delete($id);
 
         return response('', Response::HTTP_OK);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Response
+     *
+     * @throws AdvertisementSaveException
+     */
+    public function publish(int $id)
+    {
+        $this->advertisementService->publish($id);
+
+        return response('', Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Response
+     *
+     * @throws AdvertisementSaveException
+     */
+    public function cancel(int $id)
+    {
+        $this->advertisementService->cancel($id);
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 
     /**

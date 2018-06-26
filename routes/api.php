@@ -12,6 +12,9 @@ Route::group([
     Route::get('/{id}', 'AdvertisementController@show')->name('advertisements.show');
     Route::put('/{id}', 'AdvertisementController@update')->name('advertisements.update');
     Route::delete('/{id}', 'AdvertisementController@destroy')->name('advertisements.destroy');
+
+    Route::put('/{id}/publish', 'AdvertisementController@publish')->name('advertisements.publish');
+    Route::put('/{id}/cancel', 'AdvertisementController@cancel')->name('advertisements.cancel');
 });
 
 Route::group([
