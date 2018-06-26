@@ -11,6 +11,7 @@ use App\Http\Requests\Advertisement\ListRequest;
 use App\Http\Requests\Advertisement\StoreRequest;
 use App\Core\Advertisement\Exceptions\AdvertisementSaveException;
 use App\Core\Image\Exceptions\ImageSaveException;
+use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\Advertisement\UpdateRequest;
 use Illuminate\Support\Carbon;
 
@@ -156,5 +157,24 @@ class AdvertisementService
         $advertisement->cancel_date = Carbon::now()->toDateTimeString();
 
         $this->advertisementRepository->save($advertisement);
+    }
+
+    /**
+     * @param PaginationRequest $request
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAwatingModeration(PaginationRequest $request)
+    {
+        $dto = new AdvertisementsListParamsDto(
+            null,
+            null,
+            null,
+            $request->get('offset'),
+            $request->get('limit')
+        );
+
+
+        return $this->advertisementRepository->getAwatingModeration($dto);
     }
 }

@@ -124,4 +124,17 @@ class AdvertisementController extends BaseController
 
         return response('', Response::HTTP_NO_CONTENT);
     }
+
+    /**
+     * @param PaginationRequest $request
+     *
+     * @return AdvertisementCollection
+     */
+    public function awatingModeration(PaginationRequest $request)
+    {
+        $collection = $this->advertisementService->getAwatingModeration($request);
+
+
+        return new AdvertisementCollection($collection);
+    }
 }

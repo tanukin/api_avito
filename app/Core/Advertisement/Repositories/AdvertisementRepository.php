@@ -99,4 +99,17 @@ class AdvertisementRepository
             throw new AdvertisementDeleteException('Error. Advertisement was not deleted.');
         }
     }
+
+    /**
+     * @param AdvertisementsListParamsDto $dto
+     *
+     * @return Collection
+     */
+    public function getAwatingModeration(AdvertisementsListParamsDto $dto): Collection
+    {
+        $builder = Advertisement::where(['published' => false, 'cancelled' => false]);
+        $builder = $this->addListAdditionalParams($dto, $builder);
+
+        return $builder->get();
+    }
 }
